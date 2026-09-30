@@ -16,5 +16,25 @@ window.FORDIST = {
     { title: "Nama Kajian / Acara", date: "Januari 2025", type: "Eksternal", desc: "Deskripsi singkat: tema, pemateri, dan format (daring/luring).", photo: "", link: "" },
     { title: "Daras Internal: Tema", date: "Maret 2025", type: "Internal", desc: "Deskripsi singkat: tema dan hasil pembahasan.", photo: "", link: "" },
     { title: "Nama Kajian / Acara", date: "Juni 2025", type: "Eksternal", desc: "Deskripsi singkat: tema, pemateri, dan format (daring/luring).", photo: "", link: "" }
+  ],
+
+  // group: "pembimbing" atau "anggota"; role: status/peran umum; photo: path gambar (opsional, mis. "assets/team/nama.webp")
+  // Tanpa photo, ditampilkan lingkaran berisi inisial.
+  team: [
+    { name: "Ust. Usep Mohamad Ishaq", role: "Peneliti · Pembimbing", group: "pembimbing", photo: "" },
+    { name: "Ust. Wendi Zarman", role: "Akademisi · Pembimbing", group: "pembimbing", photo: "" },
+
+    { name: "Taufik Hidayat", role: "Pendiri · Koordinator logistik", group: "anggota", photo: "" },
+    { name: "Azrul Kiromil", role: "Moderator daras · Dokumentasi", group: "anggota", photo: "" },
+    { name: "Juris Arrozy", role: "Peneliti · Koordinator daras", group: "anggota", photo: "" },
+    { name: "Hasan Al-Asy'ari", role: "Pengajar · Moderator daras", group: "anggota", photo: "" },
+    { name: "Aditya Firman Ihsan", role: "Editor buku · Penerbitan", group: "anggota", photo: "" },
+    { name: "Aldy Pradhana", role: "Dosen · Filsafat Islam", group: "anggota", photo: "" },
+    { name: "Daru Nurdianna", role: "Dosen · Penulis", group: "anggota", photo: "" },
+    { name: "Fadhlurrahman Y. Fardan", role: "Moderator daras", group: "anggota", photo: "" },
+    { name: "Febri Daus", role: "Matematika · Filsafat sains", group: "anggota", photo: "" },
+    { name: "Miftahul Firdaus", role: "Sejarah intelektual Islam", group: "anggota", photo: "" },
+    { name: "M. Angga Muttaqien", role: "Anggota", group: "anggota", photo: "" },
+    { name: "Ilma Aliyah Fiddien", role: "Anggota", group: "anggota", photo: "" }
   ]
 };

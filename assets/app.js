@@ -11,8 +11,9 @@
     var cover = safeUrl(b.cover)
       ? '<div class="cover"><img src="' + esc(b.cover) + '" alt="Sampul ' + esc(b.title) + '" loading="lazy"></div>'
       : '<div class="cover auto" style="background:' + palette[i % palette.length] + '"><span>ForDIST</span><strong>' + esc(b.title) + "</strong></div>";
-    return "<" + tag + ' class="book"' + linkAttrs(url) + ">" + cover + "<h3>" + esc(b.title) + '</h3><div class="meta">' +
-      esc(b.authors) + (b.year ? " · " + esc(b.year) : "") + "</div><p>" + esc(b.desc) + "</p></" + tag + ">";
+    var meta = [b.year, b.authors].filter(Boolean).map(esc).join(" · ");
+    return "<" + tag + ' class="book"' + linkAttrs(url) + ">" + cover + '<div class="meta">' + meta + "</div><h3>" +
+      esc(b.title) + "</h3><p>" + esc(b.desc) + "</p>" + (url ? '<span class="more">Selengkapnya →</span>' : "") + "</" + tag + ">";
   }).join("");
 
   document.getElementById("events").innerHTML = (D.events || []).map(function (e) {
@@ -20,9 +21,27 @@
     var photo = safeUrl(e.photo)
       ? '<div class="photo"><img src="' + esc(e.photo) + '" alt="" loading="lazy"></div>'
       : '<div class="photo">Foto kegiatan</div>';
-    return "<" + tag + ' class="event"' + linkAttrs(url) + ">" + photo + '<div class="body"><span class="meta">' + esc(e.date) + "</span>" +
-      (e.type ? '<span class="tag">' + esc(e.type) + "</span>" : "") + "<h3>" + esc(e.title) + "</h3><p>" + esc(e.desc) + "</p></div></" + tag + ">";
+    return "<" + tag + ' class="event"' + linkAttrs(url) + ">" + photo + '<div class="body"><div class="row"><span class="meta">' + esc(e.date) + "</span><span>" +
+      esc(e.type || "") + "</span></div><h3>" + esc(e.title) + "</h3><p>" + esc(e.desc) + "</p></div></" + tag + ">";
   }).join("");
+
+  var initials = function (n) {
+    var w = n.replace(/^(Ust\.|Dr\.|Prof\.)\s+/i, "").split(/\s+/);
+    return ((w[0] || "")[0] || "") + ((w.length > 1 ? w[w.length - 1] : "")[0] || "");
+  };
+  var teamHtml = function (group) {
+    return (D.team || []).filter(function (m) { return m.group === group; }).map(function (m) {
+      var pic = safeUrl(m.photo)
+        ? '<img src="' + esc(m.photo) + '" alt="Foto ' + esc(m.name) + '" loading="lazy">'
+        : esc(initials(m.name).toUpperCase());
+      var cls = group === "pembimbing" ? "mentor" : "member";
+      return '<div class="' + cls + '"><div class="avatar">' + pic + "</div><div><h3>" + esc(m.name) + "</h3><p>" + esc(m.role) + "</p></div></div>";
+    }).join("");
+  };
+  document.getElementById("stat-books").textContent = (D.books || []).length;
+  document.getElementById("stat-people").textContent = (D.team || []).length;
+  document.getElementById("pembimbing").innerHTML = teamHtml("pembimbing");
+  document.getElementById("anggota").innerHTML = teamHtml("anggota");
 
   var mailto = "mailto:" + encodeURIComponent(D.email || "").replace("%40", "@") +
     "?subject=" + encodeURIComponent("Ingin bergabung dengan ForDIST") +
