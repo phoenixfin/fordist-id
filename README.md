@@ -1,29 +1,31 @@
 # ForDIST — fordist.id
 
-Situs statis (HTML/CSS/JS), tanpa build step.
+Situs statis (HTML/CSS/JS), tanpa build step. Di-host di GitHub Pages.
 
 ## Mengubah konten
 - Email, buku, dan kegiatan: edit `data/content.js` (isi awalnya hanya contoh).
 - Sampul buku / foto kegiatan: taruh di `assets/books/` atau `assets/events/`, lalu isi `cover` / `photo` di `data/content.js`. Gunakan `.webp`, lebar maksimal ~1200 px.
+- Setiap `git push` ke `main` otomatis menerbitkan ulang situs.
 
-## Deploy ke Cloudflare Pages
-1. Push folder ini ke repo GitHub/GitLab.
-2. Cloudflare Dashboard → **Workers & Pages** → **Create** → **Pages** → **Connect to Git**, pilih repo.
-3. Build settings: **Framework preset: None**, **Build command: (kosong)**, **Build output directory: `/`**. Deploy.
-4. Situs hidup di `https://<nama-proyek>.pages.dev`.
+## Deploy ke GitHub Pages
+1. Buat repo di GitHub, lalu push:
+   `git remote add origin https://github.com/<akun>/<repo>.git` dan `git push -u origin main`.
+2. Repo → **Settings** → **Pages** → **Build and deployment**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, Save.
+3. Berkas `CNAME` (isi `fordist.id`) sudah ada di repo, jadi custom domain terisi otomatis. Berkas `.nojekyll` mematikan pemrosesan Jekyll.
 
-Alternatif tanpa Git: `npx wrangler pages deploy . --project-name fordist`.
+## DNS di IDCloudHost
+Buat record berikut di zona DNS `fordist.id`:
 
-## Menghubungkan fordist.id (DNS di IDCloudHost)
-Apex domain (`fordist.id`) tidak bisa memakai CNAME biasa, jadi ada dua jalur:
+| Tipe | Nama | Nilai |
+|------|------|-------|
+| A | `@` | `185.199.108.153` |
+| A | `@` | `185.199.109.153` |
+| A | `@` | `185.199.110.153` |
+| A | `@` | `185.199.111.153` |
+| CNAME | `www` | `<akun>.github.io` |
 
-**A. Pindahkan nameserver ke Cloudflare (disarankan)**
-1. Cloudflare → **Add a site** → `fordist.id` (paket Free). Cloudflare memberi dua nameserver.
-2. Di panel IDCloudHost, ganti nameserver domain ke dua nameserver tersebut.
-3. Di proyek Pages → **Custom domains**, tambahkan `fordist.id` dan `www.fordist.id`. Record DNS dan SSL dibuat otomatis.
-4. Kalau ada record lain (mis. MX untuk email) di IDCloudHost, salin dulu ke Cloudflare **sebelum** ganti nameserver.
+Hapus record A/AAAA/CNAME lama untuk `@` dan `www` yang bentrok. Record lain (mis. MX untuk email) biarkan.
 
-**B. DNS tetap di IDCloudHost**
-1. Di Pages → Custom domains, tambahkan `www.fordist.id`.
-2. Di zona DNS IDCloudHost, buat `CNAME www → <nama-proyek>.pages.dev`.
-3. Arahkan `fordist.id` ke `www.fordist.id` lewat fitur redirect domain IDCloudHost (jika tersedia). Cloudflare tidak bisa memverifikasi apex tanpa memegang nameserver-nya.
+Setelah DNS menyebar (menit sampai beberapa jam), kembali ke **Settings → Pages**, tunggu pengecekan DNS lolos, lalu centang **Enforce HTTPS**. Sertifikat dibuat otomatis.
+
+Nilai IP di atas bisa berubah; cek daftar terbaru di dokumentasi GitHub Pages ("Managing a custom domain for your GitHub Pages site") sebelum mengatur DNS.
