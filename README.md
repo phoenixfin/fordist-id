@@ -1,31 +1,36 @@
-# ForDIST — fordist.id
+# ForDIST
 
-Situs statis (HTML/CSS/JS), tanpa build step. Di-host di GitHub Pages.
+**Forum Diskusi Islam, Sains, dan Teknologi** — komunitas kajian dan penerbitan buku yang berfokus pada sains dan teknologi Islam.
 
-## Mengubah konten
-- Email, buku, dan kegiatan: edit `data/content.js` (isi awalnya hanya contoh).
-- Sampul buku / foto kegiatan: taruh di `assets/books/` atau `assets/events/`, lalu isi `cover` / `photo` di `data/content.js`. Gunakan `.webp`, lebar maksimal ~1200 px.
-- Setiap `git push` ke `main` otomatis menerbitkan ulang situs.
+Anggota ForDIST tersebar di berbagai tempat dan tidak dibatasi wilayah, dengan Indonesia sebagai basis. Domain komunitas: [fordist.id](https://fordist.id).
 
-## Deploy ke GitHub Pages
-1. Buat repo di GitHub, lalu push:
-   `git remote add origin https://github.com/<akun>/<repo>.git` dan `git push -u origin main`.
-2. Repo → **Settings** → **Pages** → **Build and deployment**: Source **Deploy from a branch**, Branch **main**, folder **/ (root)**, Save.
-3. Berkas `CNAME` (isi `fordist.id`) sudah ada di repo, jadi custom domain terisi otomatis. Berkas `.nojekyll` mematikan pemrosesan Jekyll.
+## Tentang ForDIST
 
-## DNS di IDCloudHost
-Buat record berikut di zona DNS `fordist.id`:
+ForDIST lahir pada awal 2022 dari kegelisahan sejumlah pemuda Muslim berlatar sains-teknologi. Mereka ingin ada komunitas yang mengkaji hubungan Islam dan sains-teknologi dari sudut pandang worldview Islam, bukan sekadar justifikasi ilmiah atau retorika semangat. Kegiatan rutin dimulai dengan daras buku Alan Chalmers, *What Is This Thing Called Science?*, pada Maret 2022.
 
-| Tipe | Nama | Nilai |
-|------|------|-------|
-| A | `@` | `185.199.108.153` |
-| A | `@` | `185.199.109.153` |
-| A | `@` | `185.199.110.153` |
-| A | `@` | `185.199.111.153` |
-| CNAME | `www` | `<akun>.github.io` |
+Kegiatan utamanya:
 
-Hapus record A/AAAA/CNAME lama untuk `@` dan `www` yang bentrok. Record lain (mis. MX untuk email) biarkan.
+- **Kajian dan daras internal** antaranggota.
+- **Kajian dan daras eksternal** yang terbuka untuk umum.
+- **Produksi buku** dari hasil kajian dan penelitian.
 
-Setelah DNS menyebar (menit sampai beberapa jam), kembali ke **Settings → Pages**, tunggu pengecekan DNS lolos, lalu centang **Enforce HTTPS**. Sertifikat dibuat otomatis.
+## Isi repositori ini
 
-Nilai IP di atas bisa berubah; cek daftar terbaru di dokumentasi GitHub Pages ("Managing a custom domain for your GitHub Pages site") sebelum mengatur DNS.
+Repositori ini berisi situs web ForDIST, berupa satu halaman statis (HTML, CSS, dan sedikit JavaScript) tanpa framework maupun proses build. Halamannya memuat profil singkat komunitas, sejarah, kegiatan, buku-buku terbitan, tim, dan cara bergabung.
+
+```
+index.html        halaman utama
+assets/           gaya tampilan, skrip, logo, sampul buku, foto
+data/content.js   isi yang sering berubah: email, buku, kegiatan, dan tim
+CNAME             penanda domain fordist.id untuk GitHub Pages
+```
+
+Seluruh isi yang berubah dari waktu ke waktu (daftar buku, acara, anggota, dan email kontak) dikumpulkan di satu berkas, `data/content.js`, supaya mudah diperbarui tanpa menyentuh tampilan.
+
+## Bergabung dan menghubungi kami
+
+Siapa pun yang tertarik, di mana pun berada, bisa bergabung dengan mengirim email berisi nama, domisili, dan minatnya. Alamat kontak tercantum di situs.
+
+## Menyunting
+
+Perbaikan teks, data, atau tampilan dipersilakan lewat *issue* atau *pull request*.
