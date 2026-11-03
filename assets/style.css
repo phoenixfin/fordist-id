@@ -96,7 +96,8 @@ section{padding:clamp(72px,9vw,136px) var(--pad)}
 .book h3{font-size:1.75rem}
 .book p{margin:0;color:var(--muted);line-height:1.65}
 .more{font-weight:600;color:var(--green)}
-.book:hover .more{text-decoration:underline}
+.book .links{display:flex;flex-wrap:wrap;gap:8px 24px}
+.more:hover{text-decoration:underline}
 
 /* sejarah */
 .dark{background:var(--ink);color:var(--paper)}
